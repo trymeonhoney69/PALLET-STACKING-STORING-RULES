@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360° Interactive Training - Pallet Stacking & Storing Rules</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="scene-1" class="scene active">
+        <div class="scene-header">
+            <h1>360° Interactive Training Experience</h1>
+            <p>Pallet Stacking & Storing Rules</p>
+        </div>
+
+        <div class="scene-container">
+            <iframe
+                src="https://skybox.blockadelabs.com/e/106fc07b0b6acca7a868db2c5d1f000d"
+                width="700"
+                height="700"
+                style="border:0;"
+                allow="fullscreen"
+                class="scene-iframe">
+            </iframe>
+
+            <!-- Interactive Hotspots -->
+            <div class="hotspot hotspot-1" data-tooltip="Safety Equipment Storage">
+                <div class="hotspot-pulse"></div>
+            </div>
+            <div class="hotspot hotspot-2" data-tooltip="Pallet Inspection Area">
+                <div class="hotspot-pulse"></div>
+            </div>
+            <div class="hotspot hotspot-3" data-tooltip="Load Weight Limits">
+                <div class="hotspot-pulse"></div>
+            </div>
+
+            <!-- Navigation Arrow -->
+            <div class="nav-arrow nav-next" onclick="navigateToScene2()">
+                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </div>
+
+            <!-- Take Quiz Button -->
+            <button class="quiz-button" onclick="startQuiz()">
+                Take Quiz
+            </button>
+        </div>
+
+        <div class="scene-footer">
+            <p>Use your mouse to look around • Click hotspots for information • Navigate using arrows</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

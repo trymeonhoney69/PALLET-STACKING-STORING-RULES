@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scene 2 - 360° Interactive Training</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="scene-2" class="scene active">
+        <div class="scene-header">
+            <h1>360° Interactive Training - Scene 2</h1>
+            <p>Advanced Pallet Stacking Techniques</p>
+        </div>
+
+        <div class="scene-container">
+            <iframe
+                src="https://skybox.blockadelabs.com/e/e4abfb2ca8fbb8b29c178cdfe92a72ec"
+                width="700"
+                height="700"
+                style="border:0;"
+                allow="fullscreen"
+                class="scene-iframe">
+            </iframe>
+
+            <!-- Scene 2 Hotspots -->
+            <div class="hotspot hotspot-4" data-tooltip="Stacking Pattern">
+                <div class="hotspot-pulse"></div>
+            </div>
+            <div class="hotspot hotspot-5" data-tooltip="Clearance Requirements">
+                <div class="hotspot-pulse"></div>
+            </div>
+            <div class="hotspot hotspot-6" data-tooltip="Environmental Controls">
+                <div class="hotspot-pulse"></div>
+            </div>
+
+            <!-- Navigation Arrow Back -->
+            <div class="nav-arrow nav-prev" onclick="goBackToScene1()">
+                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </div>
+
+            <!-- Take Quiz Button -->
+            <button class="quiz-button" onclick="startQuiz()">
+                Take Quiz
+            </button>
+        </div>
+
+        <div class="scene-footer">
+            <p>Scene 2 of 2 • Click hotspots for advanced techniques • Complete your training with the quiz</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Scene 2 specific functionality
+        const scene2Hotspots = [
+            {
+                id: 'hotspot-4',
+                title: 'Stacking Pattern',
+                content: 'Use interlocking stacking patterns. Place pallets so that beams align vertically for maximum stability. This prevents pallets from shifting and collapsing.'
+            },
+            {
+                id: 'hotspot-5',
+                title: 'Clearance Requirements',
+                content: 'Maintain 3 feet clearance around sprinkler heads. Keep aisles clear for emergency access and equipment movement. Never block safety equipment.'
+            },
+            {
+                id: 'hotspot-6',
+                title: 'Environmental Controls',
+                content: 'Monitor temperature and humidity. Extreme conditions can affect pallet integrity and product stability. Store in climate-controlled environments when possible.'
+            }
+        ];
+
+        function goBackToScene1() {
+            window.location.href = 'index.html';
+        }
+
+        function startQuiz() {
+            // Simple quiz implementation for standalone scene
+            const quizModal = document.createElement('div');
+            quizModal.className = 'quiz-modal';
+            quizModal.innerHTML = `
+                <div class="modal-content quiz-content">
+                    <div class="modal-header">
+                        <h3>Pallet Stacking & Storing Rules Quiz</h3>
+                        <button class="close-modal" onclick="closeQuiz()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="quiz-question">
+                            <p><strong>Question:</strong> What is the recommended clearance around sprinkler heads?</p>
+                            <div class="quiz-options">
+                                <button class="quiz-option" data-answer="1">1 foot</button>
+                                <button class="quiz-option" data-answer="2">2 feet</button>
+                                <button class="quiz-option" data-answer="3">3 feet</button>
+                                <button class="quiz-option" data-answer="4">4 feet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(quizModal);
+
+            // Setup quiz interactions
+            const options = quizModal.querySelectorAll('.quiz-option');
+            options.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    handleQuizAnswer(e.target.dataset.answer, '3');
+                });
+            });
+
+            setTimeout(() => quizModal.classList.add('active'), 10);
+        }
+
+        function handleQuizAnswer(selectedAnswer, correctAnswer) {
+            const isCorrect = selectedAnswer === correctAnswer;
+            const feedback = isCorrect ?
+                'Correct! Training completed successfully.' :
+                'Incorrect. The correct answer is 3 feet. Training completed.';
+
+            const quizQuestion = document.querySelector('.quiz-question');
+            quizQuestion.innerHTML = `
+                <div class="quiz-result ${isCorrect ? 'correct' : 'incorrect'}">
+                    <h4>${feedback}</h4>
+                    <p>You have completed the 360° interactive training experience.</p>
+                    <button class="modal-btn modal-btn-primary" onclick="closeQuiz()">Finish</button>
+                    <button class="modal-btn modal-btn-secondary" onclick="goBackToScene1()">Back to Scene 1</button>
+                </div>
+            `;
+        }
+
+        function closeQuiz() {
+            const quizModal = document.querySelector('.quiz-modal');
+            if (quizModal) {
+                quizModal.classList.remove('active');
+                setTimeout(() => quizModal.remove(), 300);
+            }
+        }
+
+        // Setup hotspots
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize app
+            if (window.TrainingApp) {
+                TrainingApp.init();
+            }
+
+            // Setup hotspot interactions
+            scene2Hotspots.forEach(hotspot => {
+                const element = document.querySelector(`.${hotspot.id}`);
+                if (element) {
+                    element.addEventListener('click', () => {
+                        showHotspotInfo(hotspot);
+                    });
+                }
+            });
+        });
+
+        function showHotspotInfo(hotspot) {
+            const modal = document.createElement('div');
+            modal.className = 'hotspot-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>${hotspot.title}</h3>
+                        <button class="close-modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>${hotspot.content}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            const closeBtn = modal.querySelector('.close-modal');
+            closeBtn.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            setTimeout(() => modal.classList.add('active'), 10);
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.hotspot-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+    </script>
+</body>
+</html>
